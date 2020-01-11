@@ -2,7 +2,7 @@ import express, {Express, Request} from 'express'
 import {initialize, isEnabled} from 'unleash-client'
 
 const instance = initialize({
-    url: 'http://localhost:4242',
+    url: 'http://localhost:4242/api',
     appName: 'node-unleash-example',
     instanceId: 'my-server-instance',
 });
