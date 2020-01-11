@@ -1,4 +1,4 @@
-import express, {Express, Request} from 'express'
+import express, {Express, Request, request} from 'express'
 import {initialize, isEnabled} from 'unleash-client'
 
 const instance = initialize({
@@ -16,9 +16,17 @@ instance.on('warn', console.warn);
 const app = express()
 
 function getUserDetails(req: Request) {
-   return {
-       name: 'FakeUser'
-   } 
+    const userId  = req.header('UserId')
+    console.log(req.headers)
+
+    const unleashContext = {
+        userId
+    }
+
+    return {
+       name: 'FakeUser',
+       unleashContext
+    } 
 }
 
 const config = {
@@ -26,14 +34,11 @@ const config = {
 }
 
 app.get('/greeting', (req, res) => {
-
-    if (isEnabled('greet-by-name-feature')) {
-        let user = getUserDetails(req)
+    const user = getUserDetails(req)
+    if (isEnabled('greet-by-name-feature', user.unleashContext)) {
         return res.send(`Hello ${user.name}`)
     }
     res.send('Hello World')
-
-    
 })
 
 app.listen(8000)
