@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mocha": "^7.0.0",
     "typescript": "^3.7.4",
     "unleash-client": "^3.3.1"
